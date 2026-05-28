@@ -1,0 +1,21 @@
+name: Test Docker image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/ubuntu-24.04-grhayl:latest
+
+    steps:
+      - name: Check compilers
+        run: |
+          gcc --version
+          clang --version
+          icx --version
+
+      - name: Check HDF5
+        run: |
+          h5cc -showconfig
