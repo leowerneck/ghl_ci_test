@@ -42,12 +42,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && python -m pip install --upgrade pip \
     && pip install wheel \
-    && pip install 'jinja2==3.0.3' \
+    && pip install jinja2==3.0.3 \
     && pip install 'numpy<=1.23.1' \
-    && pip install 'bokeh==2.0.1' \
+    && pip install bokeh==2.0.1 \
     && pip install matplotlib \
     && pip install requests \
-    && pip install 'pygit2==1.18.0'
+    && pip install pygit2==1.18.0
 
 RUN echo '. /opt/intel/oneapi/setvars.sh --force >/dev/null 2>&1' \
     > /etc/profile.d/oneapi.sh
