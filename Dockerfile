@@ -46,12 +46,12 @@ RUN apt-get update \
 RUN python3 -m venv "${VIRTUAL_ENV}" \
     && "${VIRTUAL_ENV}/bin/python" -m pip install --upgrade pip setuptools wheel \
     && "${VIRTUAL_ENV}/bin/pip" install --no-cache-dir \
-        jinja2==3.0.3 \
-        'numpy>=1.26,<2' \
-        bokeh==2.0.1 \
+        bokeh \
+        jinja2 \
         matplotlib \
+        numpy \
+        pygit2
         requests \
-        pygit2==1.18.0
 
 WORKDIR /opt/et-build
 
