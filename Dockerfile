@@ -9,33 +9,12 @@ ARG ET_BUILD_JOBS=2
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        ca-certificates \
         cmake \
         curl \
         g++ \
         gcc \
         gfortran \
         git \
-        gnupg \
-        make \
-        numactl \
-        patch \
-        perl \
-        pkg-config \
-        python-is-python3 \
-        python3 \
-        python3-pip \
-        rsync \
-        wget \
-    && wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
-        | gpg --dearmor -o /usr/share/keyrings/intel-oneapi-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/intel-oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
-        > /etc/apt/sources.list.d/oneAPI.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        clang \
-        intel-oneapi-compiler-dpcpp-cpp \
-        gcovr \
         libfftw3-dev \
         libgsl-dev \
         libhdf5-dev \
@@ -48,7 +27,15 @@ RUN apt-get update \
         libssl-dev \
         libudev-dev \
         libyaml-cpp-dev \
-        openmpi-bin \
+        make \
+        numactl \
+        patch \
+        perl \
+        pkg-config \
+        python-is-python3 \
+        python3 \
+        python3-pip \
+        rsync \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
