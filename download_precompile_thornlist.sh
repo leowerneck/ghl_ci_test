@@ -21,7 +21,7 @@ else
     exit 1
 fi
 
-sed '/^GRHayL\//d; /^GRHayLET\//d' "$MASTER_THORNFILE" > "$PRECOMPILE_THORNFILE"
+sed '/^GRHayL\//d; /^GRHayLET\//d; /^.*\/Formaline/d' "$MASTER_THORNFILE" > "$PRECOMPILE_THORNFILE"
 echo "Generated precompile thornlist"
 
 echo "Downloading the Einstein Toolkit"

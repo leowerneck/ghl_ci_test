@@ -22,7 +22,7 @@ RUN apt-get update \
         libhdf5-dev \
         libhdf5-openmpi-dev \
         libhwloc-dev \
-        libjpeg-turbo?-dev \
+        libjpeg-dev \
         liblapack-dev \
         libopenmpi-dev \
         libpapi-dev \
