@@ -1,8 +1,9 @@
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PATH="/opt/intel/oneapi/compiler/latest/bin:${PATH}"
-ENV LD_LIBRARY_PATH="/opt/intel/oneapi/compiler/latest/lib:${LD_LIBRARY_PATH}"
+ENV VIRTUAL_ENV=/opt/et-python
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG ET_BUILD_JOBS=2
@@ -36,21 +37,21 @@ RUN apt-get update \
         python-is-python3 \
         python3 \
         python3-pip \
+        python3-venv \
         rsync \
         subversion \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && python -m pip install --upgrade pip \
-    && pip install wheel \
-    && pip install jinja2==3.0.3 \
-    && pip install 'numpy<=1.23.1' \
-    && pip install bokeh==2.0.1 \
-    && pip install matplotlib \
-    && pip install requests \
-    && pip install pygit2==1.18.0
+    && rm -rf /var/lib/apt/lists/*
 
-RUN echo '. /opt/intel/oneapi/setvars.sh --force >/dev/null 2>&1' \
-    > /etc/profile.d/oneapi.sh
+RUN python3 -m venv "${VIRTUAL_ENV}" \
+    && "${VIRTUAL_ENV}/bin/python" -m pip install --upgrade pip wheel \
+    && "${VIRTUAL_ENV}/bin/pip" install --no-cache-dir \
+        jinja2==3.0.3 \
+        'numpy<=1.23.1' \
+        bokeh==2.0.1 \
+        matplotlib \
+        requests \
+        pygit2==1.18.0
 
 WORKDIR /opt/et-build
 

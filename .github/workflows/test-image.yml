@@ -13,8 +13,6 @@ jobs:
       - name: Check compilers
         run: |
           gcc --version
-          clang --version
-          icx --version
 
       - name: Check HDF5
         run: |
