@@ -50,8 +50,8 @@ RUN python3 -m venv "${VIRTUAL_ENV}" \
         jinja2 \
         matplotlib \
         numpy \
-        pygit2
-        requests \
+        pygit2 \
+        requests
 
 WORKDIR /opt/et-build
 
