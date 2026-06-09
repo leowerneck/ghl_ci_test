@@ -44,10 +44,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m venv "${VIRTUAL_ENV}" \
-    && "${VIRTUAL_ENV}/bin/python" -m pip install --upgrade pip wheel \
+    && "${VIRTUAL_ENV}/bin/python" -m pip install --upgrade pip setuptools wheel \
     && "${VIRTUAL_ENV}/bin/pip" install --no-cache-dir \
         jinja2==3.0.3 \
-        'numpy<=1.23.1' \
+        'numpy>=1.26,<2' \
         bokeh==2.0.1 \
         matplotlib \
         requests \
