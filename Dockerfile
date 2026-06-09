@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG ET_BUILD_JOBS=2
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install -y --fix-missing \
         cmake \
         curl \
         g++ \
@@ -16,11 +16,12 @@ RUN apt-get update \
         gfortran \
         git \
         libfftw3-dev \
+        libgit2-dev \
         libgsl-dev \
         libhdf5-dev \
         libhdf5-openmpi-dev \
         libhwloc-dev \
-        libjpeg-dev \
+        libjpeg-turbo?-dev \
         liblapack-dev \
         libopenmpi-dev \
         libpapi-dev \
@@ -36,8 +37,17 @@ RUN apt-get update \
         python3 \
         python3-pip \
         rsync \
+        subversion \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && python -m pip install --upgrade pip \
+    && pip install wheel \
+    && pip install 'jinja2==3.0.3' \
+    && pip install 'numpy<=1.23.1' \
+    && pip install 'bokeh==2.0.1' \
+    && pip install matplotlib \
+    && pip install requests \
+    && pip install 'pygit2==1.18.0'
 
 RUN echo '. /opt/intel/oneapi/setvars.sh --force >/dev/null 2>&1' \
     > /etc/profile.d/oneapi.sh
