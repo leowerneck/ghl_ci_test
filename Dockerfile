@@ -63,6 +63,8 @@ RUN chmod +x GetComponents download_precompile_thornlist.sh \
     && ./simfactory/bin/sim setup-silent \
     && ./simfactory/bin/sim build -j"${ET_BUILD_JOBS}" \
         --thornlist=thornlists/precompile.th \
-        --optionlist=../gcc.cfg
+        --optionlist=../gcc.cfg \
+    && rm -f exe/cactus_sim
+
 
 CMD ["bash"]
