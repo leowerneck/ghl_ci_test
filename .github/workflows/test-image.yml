@@ -1,19 +1,50 @@
 name: Test Docker image
 
 on:
+  push:
+    paths-ignore:
+      - Dockerfile
+      - download_precompile_thornlist.sh
+      - gcc.cfg
+      - ghl_thorns.th
+  workflow_run:
+    workflows:
+      - Publish Docker image
+    types:
+      - completed
   workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
 
 jobs:
   test:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     container:
       image: ghcr.io/${{ github.repository_owner }}/ubuntu-24.04-grhayl:latest
 
-    steps:
-      - name: Check compilers
-        run: |
-          gcc --version
+    env:
+      ET_DIR: /opt/et-build/et-gcc
 
-      - name: Check HDF5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Update Einstein Toolkit thornlist
+        shell: bash
         run: |
-          h5cc -showconfig
+          set -euo pipefail
+          cd "${ET_DIR}"
+          ./bin/GetComponents --no-update "${GITHUB_WORKSPACE}/ghl_thorns.th"
+          tail -n +9 "${GITHUB_WORKSPACE}/ghl_thorns.th" >> ./thornlists/precompile.th
+
+      - name: Rebuild Einstein Toolkit
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "${ET_DIR}"
+          ./simfactory/bin/sim build -j"$(nproc)" \
+            --thornlist=thornlists/precompile.th \
+            --optionlist=../gcc.cfg

@@ -9,7 +9,7 @@ set -euo pipefail
 if [ "$#" -gt 0 ]; then
     ET_DIRS=("$@")
 else
-    ET_DIRS=(et-gcc et-clang et-icc)
+    ET_DIRS=(et-gcc)
 fi
 
 rm -f "$MASTER_THORNFILE"
@@ -21,8 +21,14 @@ else
     exit 1
 fi
 
-sed '/^GRHayL\//d; /^GRHayLET\//d; /^.*\/Formaline/d' "$MASTER_THORNFILE" > "$PRECOMPILE_THORNFILE"
-echo "Generated precompile thornlist"
+# Note: all arrangements that mention GRHayL or GRHayLET will be removed.
+awk -v RS= -v ORS='\n\n' '
+  $0 !~ /(^|\n)GRHayL\// &&
+  $0 !~ /(^|\n)GRHayLET\// &&
+  $0 !~ /(^|\n)[^!\n].*\/Formaline([[:space:]]|$)/
+' "$MASTER_THORNFILE" > "$PRECOMPILE_THORNFILE"
+
+echo "Generated 'precompile.th' thornlist"
 
 echo "Downloading the Einstein Toolkit"
 for etdir in "${ET_DIRS[@]}"; do

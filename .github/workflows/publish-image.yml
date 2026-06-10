@@ -8,11 +8,13 @@ on:
       - Dockerfile
       - download_precompile_thornlist.sh
       - gcc.cfg
+      - ghl_thorns.th
   pull_request:
     paths:
       - Dockerfile
       - download_precompile_thornlist.sh
       - gcc.cfg
+      - ghl_thorns.th
   workflow_dispatch:
 
 permissions:
