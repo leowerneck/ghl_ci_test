@@ -45,6 +45,7 @@ jobs:
         run: |
           set -euo pipefail
           cd "${ET_DIR}"
+          ./simfactory/bin/sim setup-silent
           ./simfactory/bin/sim build -j"$(nproc)" \
             --thornlist=thornlists/precompile.th \
             --optionlist=../gcc.cfg
