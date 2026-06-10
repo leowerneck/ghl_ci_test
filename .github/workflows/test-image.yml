@@ -37,8 +37,8 @@ jobs:
         run: |
           set -euo pipefail
           cd "${ET_DIR}"
-          ./bin/GetComponents --no-update "${GITHUB_WORKSPACE}/ghl_thorns.th"
-          tail -n +9 "${GITHUB_WORKSPACE}/ghl_thorns.th" >> ./thornlists/precompile.th
+          ./bin/GetComponents --root . "${GITHUB_WORKSPACE}/ghl_thorns.th"
+          tail -n +9 thornlists/ghl_thorns.th >> thornlists/precompile.th
 
       - name: Rebuild Einstein Toolkit
         shell: bash

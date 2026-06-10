@@ -36,5 +36,4 @@ echo "Downloading the Einstein Toolkit"
 for etdir in "${ET_DIRS[@]}"; do
     rm -rf "$etdir"
     ./GetComponents --shallow --root "$etdir" "$PRECOMPILE_THORNFILE"
-    rm -rf "$etdir/repos/GRHayL" "$etdir/repos/GRHayLET"
 done
