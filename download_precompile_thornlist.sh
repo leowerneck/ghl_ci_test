@@ -24,9 +24,11 @@ fi
 # Note: all arrangements that mention GRHayL or GRHayLET will be removed.
 awk -v RS= -v ORS='\n\n' '
   $0 !~ /(^|\n)GRHayL\// &&
-  $0 !~ /(^|\n)GRHayLET\// &&
-  $0 !~ /(^|\n)[^!\n].*\/Formaline([[:space:]]|$)/
+  $0 !~ /(^|\n)GRHayLET\//
 ' "$MASTER_THORNFILE" > "$PRECOMPILE_THORNFILE"
+
+# We don't need Formaline for this particular CI instance.
+sed -i '/Formaline/d' "$PRECOMPILE_THORNFILE"
 
 echo "Generated 'precompile.th' thornlist"
 
